@@ -633,26 +633,33 @@ dl.bar {
 .leftear {
     float: right;
     text-align: right;
-    a {
-        padding-right: 0.33em;
-        @include single-transition(left, 0.1s, linear);
-    }
-    a:hover {
-        left: -5px;
-        @include single-transition(left, 0.1s, linear);
-    }
 }
 .rightear {
     float: left;
     text-align: left;
-    a {
-        padding-left: 0.33em;
-        @include single-transition(right, 0.1s, linear);
+}
+.no-touch{
+   .leftear {
+        a {
+            padding-right: 0.33em;
+            @include single-transition(left, 0.1s, linear);
+        }
+        a:hover {
+            left: -5px;
+            @include single-transition(left, 0.1s, linear);
+        }
     }
-    a:hover {
-        right: -5px;
-        @include single-transition(right, 0.1s, linear);
+    .rightear {
+        a {
+            padding-left: 0.33em;
+            @include single-transition(right, 0.1s, linear);
+        }
+        a:hover {
+            right: -5px;
+            @include single-transition(right, 0.1s, linear);
+        }
     }
+ 
 }
 
 @media screen and (min-width: 768px){

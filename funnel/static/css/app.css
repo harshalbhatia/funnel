@@ -810,33 +810,34 @@ dl.bar dd:last-child {
   float: right;
   text-align: right;
 }
-.leftear a {
+
+.rightear {
+  float: left;
+  text-align: left;
+}
+
+.no-touch .leftear a {
   padding-right: 0.33em;
   -webkit-transition: left 0.1s linear;
   -moz-transition: left 0.1s linear;
   -o-transition: left 0.1s linear;
   transition: left 0.1s linear;
 }
-.leftear a:hover {
+.no-touch .leftear a:hover {
   left: -5px;
   -webkit-transition: left 0.1s linear;
   -moz-transition: left 0.1s linear;
   -o-transition: left 0.1s linear;
   transition: left 0.1s linear;
 }
-
-.rightear {
-  float: left;
-  text-align: left;
-}
-.rightear a {
+.no-touch .rightear a {
   padding-left: 0.33em;
   -webkit-transition: right 0.1s linear;
   -moz-transition: right 0.1s linear;
   -o-transition: right 0.1s linear;
   transition: right 0.1s linear;
 }
-.rightear a:hover {
+.no-touch .rightear a:hover {
   right: -5px;
   -webkit-transition: right 0.1s linear;
   -moz-transition: right 0.1s linear;
