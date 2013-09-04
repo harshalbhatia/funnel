@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask.ext.wtf import Form
+from baseframe.forms import Form, MarkdownField
 import wtforms
 import wtforms.fields.html5
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
@@ -10,7 +10,8 @@ class ProposalSpaceForm(Form):
     name = wtforms.TextField('URL name', validators=[wtforms.validators.Required()])
     title = wtforms.TextField('Title', validators=[wtforms.validators.Required()])
     datelocation = wtforms.TextField('Date and Location', validators=[wtforms.validators.Required()])
-    date = wtforms.DateField('Date (for sorting)', validators=[wtforms.validators.Required()])
+    date = wtforms.DateField('Date (for sorting)',
+            validators=[wtforms.validators.Required('Enter a valid date in YYYY-MM-DD format.')])
     tagline = wtforms.TextField('Tagline', validators=[wtforms.validators.Required()])
     description = wtforms.TextAreaField('Description', validators=[wtforms.validators.Required()])
     status = wtforms.SelectField('Status', coerce=int, choices=[
@@ -52,7 +53,7 @@ class ProposalForm(Form):
         description="The title of your session")
     section = QuerySelectField('Section', get_label='title', validators=[wtforms.validators.Required()],
         widget=wtforms.widgets.ListWidget(prefix_label=False), option_widget=wtforms.widgets.RadioInput())
-    objective = wtforms.TextAreaField('Objective', validators=[wtforms.validators.Required()],
+    objective = MarkdownField('Objective', validators=[wtforms.validators.Required()],
         description="What is the expected benefit for someone attending this?")
     session_type = wtforms.RadioField('Session type', validators=[wtforms.validators.Required()], choices=[
         ('Lecture', 'Lecture'),
@@ -67,9 +68,9 @@ class ProposalForm(Form):
         ('Intermediate', 'Intermediate'),
         ('Advanced', 'Advanced'),
         ])
-    description = wtforms.TextAreaField('Description', validators=[wtforms.validators.Required()],
+    description = MarkdownField('Description', validators=[wtforms.validators.Required()],
         description="A detailed description of the session")
-    requirements = wtforms.TextAreaField('Requirements',
+    requirements = MarkdownField('Requirements',
         description="For workshops, what must participants bring to the session?")
     slides = wtforms.fields.html5.URLField('Slides', validators=[wtforms.validators.Optional(), wtforms.validators.URL()],
         description="Link to your slides. These can be just an outline initially. "
@@ -78,13 +79,13 @@ class ProposalForm(Form):
         description="Other links, one per line. Provide links to your profile and "
             "slides and videos from your previous sessions; anything that'll help "
             "folks decide if they want to attend your session")
-    bio = wtforms.TextAreaField('Speaker bio', validators=[wtforms.validators.Required()],
+    bio = MarkdownField('Speaker bio', validators=[wtforms.validators.Required()],
         description="Tell us why you are the best person to be taking this session")
 
 
 class CommentForm(Form):
     parent_id = wtforms.HiddenField('Parent', default="", id="comment_parent_id")
-    edit_id = wtforms.HiddenField('Edit', default="", id="comment_edit_id")
+    comment_edit_id = wtforms.HiddenField('Edit', default="", id="comment_edit_id")
     message = wtforms.TextAreaField('Add comment', id="comment_message", validators=[wtforms.validators.Required()])
 
 

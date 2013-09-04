@@ -19,7 +19,7 @@ from flask import (
     escape,
     Response)
 from flask.ext.mail import Message
-from coaster.views import get_next_url, jsonp
+from coaster.views import get_next_url, jsonp, load_models, load_model
 from coaster.gfm import markdown
 
 from .. import app, mail, lastuser
@@ -33,7 +33,7 @@ from ..forms import (
     DeleteCommentForm,
     ConfirmDeleteForm,
     ConfirmSessionForm)
-from ..utils import makename
+from coaster import make_name
 
 jsoncallback_re = re.compile(r'^[a-z$_][0-9a-z$_]*$', re.I)
 
@@ -120,7 +120,7 @@ def account():
 # --- Routes: spaces ----------------------------------------------------------
 
 @app.route('/new', methods=['GET', 'POST'])
-#@lastuser.requires_permission('siteadmin')
+@lastuser.requires_permission('siteadmin')
 def newspace():
     form = ProposalSpaceForm()
     form.description.flags.markdown = True
@@ -145,7 +145,7 @@ def viewspace(name):
     confirmed = Proposal.query.filter_by(proposal_space=space, confirmed=True).order_by(db.desc('created_at')).all()
     unconfirmed = Proposal.query.filter_by(proposal_space=space, confirmed=False).order_by(db.desc('created_at')).all()
     return render_template('space.html', space=space, description=description, sections=sections,
-        confirmed=confirmed, unconfirmed=unconfirmed)
+        confirmed=confirmed, unconfirmed=unconfirmed, is_siteadmin=lastuser.has_permission('siteadmin'))
 
 
 @app.route('/<name>/json')
@@ -199,7 +199,7 @@ def editspace(name):
     return render_template('baseframe/autoform.html', form=form, title="Edit proposal space", submit="Save changes")
 
 
-@app.route('/<name>/newsection', methods=['GET', 'POST'])
+@app.route('/<name>/sections/new', methods=['GET', 'POST'])
 @lastuser.requires_permission('siteadmin')
 def newsection(name):
     space = ProposalSpace.query.filter_by(name=name).first()
@@ -214,6 +214,55 @@ def newsection(name):
         flash("Your new section has been added", "info")
         return redirect(url_for('viewspace', name=space.name), code=303)
     return render_template('baseframe/autoform.html', form=form, title="New section", submit="Create section")
+
+
+@app.route('/<space>/sections/<section>/edit', methods=['GET', 'POST'])
+@lastuser.requires_permission('siteadmin')
+@load_models(
+    (ProposalSpace, {'name': 'space'}, 'space'),
+    (ProposalSpaceSection, {'name': 'section', 'proposal_space': 'space'}, 'section'))
+def section_edit(space, section):
+    form = SectionForm(obj=section)
+    if form.validate_on_submit():
+        form.populate_obj(section)
+        db.session.commit()
+        flash("Your section has been edited", "info")
+        return redirect(url_for('viewspace', name=space.name), code=303)
+    return render_template('baseframe/autoform.html', form=form, title="Edit section", submit="Edit section")
+
+
+@app.route('/<space>/sections/<section>/delete', methods=['GET', 'POST'])
+@lastuser.requires_permission('siteadmin')
+@load_models(
+    (ProposalSpace, {'name': 'space'}, 'space'),
+    (ProposalSpaceSection, {'name': 'section', 'proposal_space': 'space'}, 'section'))
+def section_delete(space, section):
+    form = ConfirmDeleteForm()
+    if form.validate_on_submit():
+        if 'delete' in request.form:
+            db.session.delete(section)
+            db.session.commit()
+            flash("Your section has been deleted", "info")
+        return redirect(url_for('viewspace', name=space.name), code=303)
+    return render_template('delete.html', form=form, title=u"Confirm delete",
+        message=u"Do you really wish to delete section '%s'?" % section.title)
+
+
+@app.route('/<space>/sections')
+@lastuser.requires_permission('siteadmin')
+@load_model(ProposalSpace, {'name': 'space'}, 'space')
+def sections_list(space):
+    sections = ProposalSpaceSection.query.filter_by(proposal_space=space).all()
+    return render_template('sections.html', space=space, sections=sections)
+
+
+@app.route('/<space>/sections/<section>')
+@lastuser.requires_permission('siteadmin')
+@load_models(
+    (ProposalSpace, {'name': 'space'}, 'space'),
+    (ProposalSpaceSection, {'name': 'section', 'proposal_space': 'space'}, 'section'))
+def section_view(space, section):
+    return render_template('section.html', space=space, section=section)
 
 
 @app.route('/<name>/users')
@@ -288,18 +337,11 @@ def usergroup_delete(name, group):
 @app.route('/<name>/new', methods=['GET', 'POST'])
 @lastuser.requires_login
 def newsession(name):
-    space = ProposalSpace.query.filter_by(name=name).first()
-    if not space:
-        abort(404)
+    space = ProposalSpace.query.filter_by(name=name).first_or_404()
     if space.status != SPACESTATUS.SUBMISSIONS:
         abort(403)
     form = ProposalForm()
     del form.session_type  # We don't use this anymore
-    # Set markdown flag to True for fields that need markdown conversion
-    markdown_attrs = ('description', 'objective', 'requirements', 'bio')
-    for name in markdown_attrs:
-        attr = getattr(form, name)
-        attr.flags.markdown = True
     form.section.query = ProposalSpaceSection.query.filter_by(proposal_space=space, public=True).order_by('title')
     if len(list(form.section.query.all())) == 0:
         # Don't bother with sections when there aren't any
@@ -314,12 +356,7 @@ def newsession(name):
             proposal.speaker = None
         proposal.votes.vote(g.user)  # Vote up your own proposal by default
         form.populate_obj(proposal)
-        proposal.name = makename(proposal.title)
-        # Set *_html attributes after converting markdown text
-        for name in markdown_attrs:
-            attr = getattr(proposal, name)
-            html_attr = name + '_html'
-            setattr(proposal, html_attr, markdown(attr))
+        proposal.name = make_name(proposal.title)
         db.session.add(proposal)
         db.session.commit()
         flash("Your new session has been saved", "info")
@@ -349,18 +386,13 @@ def editsession(name, slug):
     if len(list(form.section.query.all())) == 0:
         # Don't bother with sections when there aren't any
         del form.section
-    # Set markdown flag to True for fields that need markdown conversion
-    markdown_attrs = ('description', 'objective', 'requirements', 'bio')
-    for name in markdown_attrs:
-        attr = getattr(form, name)
-        attr.flags.markdown = True
     if proposal.user != g.user:
         del form.speaking
     elif request.method == 'GET':
         form.speaking.data = proposal.speaker == g.user
     if form.validate_on_submit():
         form.populate_obj(proposal)
-        proposal.name = makename(proposal.title)
+        proposal.name = make_name(proposal.title)
         if proposal.user == g.user:
             # Only allow the speaker to change this status
             if form.speaking.data:
@@ -368,11 +400,6 @@ def editsession(name, slug):
             else:
                 if proposal.speaker == g.user:
                     proposal.speaker = None
-        # Set *_html attributes after converting markdown text
-        for name in markdown_attrs:
-            attr = getattr(proposal, name)
-            html_attr = name + '_html'
-            setattr(proposal, html_attr, markdown(attr))
         proposal.edited_at = datetime.utcnow()
         db.session.commit()
         flash("Your changes have been saved", "info")
@@ -477,8 +504,8 @@ def viewsession(name, slug):
     if request.method == 'POST':
         if request.form.get('form.id') == 'newcomment' and commentform.validate():
             send_mail_info = []
-            if commentform.edit_id.data:
-                comment = Comment.query.get(int(commentform.edit_id.data))
+            if commentform.comment_edit_id.data:
+                comment = Comment.query.get(int(commentform.comment_edit_id.data))
                 if comment:
                     if comment.user == g.user:
                         comment.message = commentform.message.data
@@ -823,39 +850,3 @@ def prevsession(name, slug):
     else:
         flash("You were at the first proposal", "info")
         return redirect(url_for('viewspace', name=space.name))
-
-
-@app.template_filter('age')
-def age(dt):
-    suffix = u"ago"
-    delta = datetime.utcnow() - dt
-    if delta.days == 0:
-        # < 1 day
-        if delta.seconds < 10:
-            return "seconds %s" % suffix
-        elif delta.seconds < 60:
-            return "%d seconds %s" % (delta.seconds, suffix)
-        elif delta.seconds < 120:
-            return "a minute %s" % suffix
-        elif delta.seconds < 3600:  # < 1 hour
-            return "%d minutes %s" % (int(delta.seconds / 60), suffix)
-        elif delta.seconds < 7200:  # < 2 hours
-            return "an hour %s" % suffix
-        else:
-            return "%d hours %s" % (int(delta.seconds / 3600), suffix)
-    elif delta.days == 1:
-        return u"a day %s" % suffix
-    else:
-        return u"%d days %s" % (delta.days, suffix)
-
-
-#@app.route('/email')
-#@lastuser.requires_login
-#def show_email():
-#    return jsonp(lastuser.call_resource('email', all=1))
-
-
-#@app.route('/api/event', methods=['POST'])
-#@lastuser.resource_handler('event')
-#def api_event(token):
-#    return jsonp(token)

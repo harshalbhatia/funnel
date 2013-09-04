@@ -88,9 +88,9 @@
         <form method="POST" action="{{ url_for('confirmsession', name=space.name, slug=proposal.urlname) }}" style="float: right">
           {{ confirmform.hidden_tag() }}
           {% if proposal.confirmed -%}
-            <button type="submit">Cancel Session</button>
+            <button class="btn btn-warning" type="submit">Cancel Session</button>
           {% else %}
-            <button type="submit">Confirm Session</button>
+            <button class="btn btn-warning" type="submit">Confirm Session</button>
           {% endif -%}
         </form>
       {% endif %}
@@ -174,7 +174,7 @@
           <input type="hidden" name="form.id" value="newcomment"/>
           {{ commentform.hidden_tag() }}
           {{ commentform.parent_id() }}
-          {{ commentform.edit_id() }}
+          {{ commentform.comment_edit_id() }}
         </div>
         <p>
           {{ renderfield(commentform.message) }}
