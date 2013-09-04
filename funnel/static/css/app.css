@@ -532,6 +532,7 @@ table.listing {
 }
 .infosheet .section {
   padding: 0 1.2em;
+  word-wrap: break-word;
 }
 .infosheet .section h1 {
   margin: 0.5em 0 0 0;
