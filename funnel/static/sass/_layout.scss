@@ -44,10 +44,11 @@
             padding-right: 0;
         }
         &.home {
-            @include replace-text-with-dimensions('home.png', 12, 22);
-            padding: 0 0.2em 0 0;
             a {
-                display: block;
+                font-size: 13px;
+                &:hover{
+                    text-decoration: none;
+                }
             }
         }
     }

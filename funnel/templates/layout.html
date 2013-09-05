@@ -19,8 +19,8 @@
 
 {% block baseheadline -%}
   {%- if breadcrumbs %}
-    <ul class="breadcrumbs">
-      <li class="home"><a href="{{ url_for('index') }}">Home</a></li>
+    <ul class="breadcrumbs">      
+      <li class="home"><a href="{{ url_for('index') }}"><i class="icon-home"></i></a></li>
       {% for url, title in breadcrumbs -%}
       <li><a href="{{ url }}">{{ title }}</a></li>
       {% endfor -%}

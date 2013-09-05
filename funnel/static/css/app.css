@@ -56,19 +56,11 @@
   content: "";
   padding-right: 0;
 }
-.breadcrumbs li.home {
-  text-indent: -119988px;
-  overflow: hidden;
-  text-align: left;
-  background-image: url('../img/home.png?1377178358');
-  background-repeat: no-repeat;
-  background-position: 12 22;
-  width: 12px;
-  height: 22px;
-  padding: 0 0.2em 0 0;
-}
 .breadcrumbs li.home a {
-  display: block;
+  font-size: 13px;
+}
+.breadcrumbs li.home a:hover {
+  text-decoration: none;
 }
 
 @media screen and (min-width: 768px) {
