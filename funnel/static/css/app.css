@@ -1,8 +1,9 @@
+@charset "UTF-8";
 #logo {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../img/logo.png?1377716335');
+  background-image: url('../img/logo.png?1378304471');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 110px;
@@ -16,7 +17,7 @@
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../img/logo.png?1377716335');
+  background-image: url('../img/logo.png?1378304471');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 110px;
@@ -59,7 +60,7 @@
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../img/home.png?1377162656');
+  background-image: url('../img/home.png?1377178358');
   background-repeat: no-repeat;
   background-position: 12 22;
   width: 12px;
@@ -216,6 +217,9 @@ table.listing {
 .infosheet .section .social #___plusone_0 {
   width: 70px !important;
 }
+.infosheet .section .social button {
+  margin-top: 20px;
+}
 .infosheet .section.bar {
   position: relative;
   color: white;
@@ -298,6 +302,10 @@ table.listing {
   .infosheet .section .social {
     margin: 1em 0;
   }
+  .infosheet .section .social button {
+    float: right;
+    margin-top: -14px;
+  }
   .infosheet .section.bar {
     position: relative;
     color: white;
@@ -339,6 +347,9 @@ table.listing {
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .infosheet .votebox .choices {
     font-size: 180%;
+  }
+  .infosheet .section .social button {
+    margin-top: -10px;
   }
 }
 dl dt {
@@ -588,14 +599,17 @@ form#newcomment #field-comment_message .help-required {
 form#newcomment #field-comment_message > .col-md-2, form#newcomment #field-comment_message > .col-md-8 {
   width: 100%;
 }
+form#newcomment #comment_message {
+  width: 100%;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  padding: 6px;
+}
 form#newcomment #comment-submit {
   margin-top: 5px;
 }
 
 @media screen and (min-width: 768px) {
-  form#newcomment #field-comment_message > .col-md-2, form#newcomment #field-comment_message > .col-md-8 {
-    padding: 0;
-  }
   form#newcomment #comment-submit {
     margin-top: 15px;
   }
