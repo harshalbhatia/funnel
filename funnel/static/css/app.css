@@ -113,137 +113,29 @@ table.listing {
   background: #d9e8f0;
 }
 
-.infosheet {
-  margin: -0.7em -15px 1em -15px;
-  padding-bottom: 1em;
-  border: 1px solid #afafaf;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  clear: both;
+#proposal-nav {
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA;
+  margin-top: -10px;
 }
-.infosheet .votebox {
-  float: right;
-  text-align: center;
-  padding-left: 1em;
+#proposal-nav a i {
+  color: #757576;
+  display: block;
+  padding-top: 17px;
 }
-.infosheet .votebox .choices {
-  font-size: 180%;
-  margin-top: 10px;
-  text-align: center;
+#proposal-nav a h6 {
+  color: #757576;
+  margin-bottom: 5px;
 }
-.infosheet .votebox .choices span.score {
-  font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
-  border: 1px solid #b7b7b7;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  padding: 0 3px;
-}
-.infosheet .votebox .choices span.indicator {
-  font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
-}
-.infosheet .votebox .choices a.votechoice {
-  font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
-  border: 1px solid transparent;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  padding: 0 3px;
-}
-.infosheet .votebox .choices a.votechoice:hover {
-  border: 1px solid #b7b7b7;
-  text-decoration: none;
-}
-.infosheet .votebox .choices a.votechoice:active, .infosheet .votebox .choices a.votechoice.selected {
-  background-color: #d9e8f0;
-  color: #444444;
-}
-.infosheet .votebox .label {
-  margin-top: 0.5em;
-}
-.infosheet .section {
-  padding: 0 1.2em;
-  word-wrap: break-word;
-}
-.infosheet .section h1 {
-  margin: 0.5em 0 0 0;
-}
-.infosheet .section h2 {
-  font-size: 100%;
-  font-weight: bold;
-  background: #d9e8f0;
-  padding: 0.25em 0.5em;
-  margin: 0 -0.5em;
-  color: #444444;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-}
-.infosheet .section h1 + p, .infosheet .section h1 + ul, .infosheet .section h1 + ol, .infosheet .section h2 + p, .infosheet .section h2 + ul, .infosheet .section h2 + ol {
-  margin-top: 0.5em;
-}
-.infosheet .section .social {
-  position: relative;
-  margin: 0.2em 0 -0.5em 0;
-}
-.infosheet .section .social iframe {
-  display: inline-block;
-}
-.infosheet .section .social iframe.twitter-share-button {
-  width: 88px !important;
-}
-.infosheet .section .social iframe.facebooklike {
-  position: relative;
-  top: 1px;
-  width: 125px !important;
-}
-.infosheet .section .social #___plusone_0 {
-  width: 70px !important;
-}
-.infosheet .section .social button {
-  margin-top: 20px;
-}
-.infosheet .section.bar {
-  position: relative;
-  color: white;
-  background-color: #df5e0e;
-  padding: 1px 6px;
-  font-size: 0.8em;
-  text-align: -moz-center;
-  text-align: -webkit-center;
-  text-align: center;
-}
-.infosheet .section.first {
-  border-top: none;
-  text-align: center;
-}
-.infosheet .section.first h1 {
-  margin-bottom: 10px;
-}
-.infosheet .embed-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  /* 16/9 ratio */
-  padding-top: 30px;
-  /* IE6 workaround*/
-  height: 0;
+#proposal-nav a .prev-next {
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-bottom: 5px;
 }
-.infosheet .embed-container iframe, .infosheet .embed-container object, .infosheet .embed-container embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+#leftear {
+  border-right: 1px solid #EAEAEA;
 }
 
 @media screen and (min-width: 992px) {
@@ -277,6 +169,139 @@ table.listing {
   }
 }
 @media screen and (min-width: 768px) {
+  .infosheet {
+    margin: -0.7em -15px 1em -15px;
+    padding-bottom: 1em;
+    border: 1px solid #afafaf;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    clear: both;
+  }
+  .infosheet .votebox {
+    float: right;
+    text-align: center;
+    padding-left: 1em;
+  }
+  .infosheet .votebox .choices {
+    font-size: 180%;
+    margin-top: 10px;
+    text-align: center;
+  }
+  .infosheet .votebox .choices span.score {
+    font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
+    border: 1px solid #b7b7b7;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 0 3px;
+  }
+  .infosheet .votebox .choices span.indicator {
+    font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
+  }
+  .infosheet .votebox .choices a.votechoice {
+    font-family: inconsolata-1, inconsolata-2, Inconsolata, monospace;
+    border: 1px solid transparent;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 0 3px;
+  }
+  .infosheet .votebox .choices a.votechoice:hover {
+    border: 1px solid #b7b7b7;
+    text-decoration: none;
+  }
+  .infosheet .votebox .choices a.votechoice:active, .infosheet .votebox .choices a.votechoice.selected {
+    background-color: #d9e8f0;
+    color: #444444;
+  }
+  .infosheet .votebox .label {
+    margin-top: 0.5em;
+  }
+  .infosheet .section {
+    padding: 0 1.2em;
+    word-wrap: break-word;
+  }
+  .infosheet .section h1 {
+    margin: 0.5em 0 0 0;
+  }
+  .infosheet .section h2 {
+    font-size: 100%;
+    font-weight: bold;
+    background: #d9e8f0;
+    padding: 0.25em 0.5em;
+    margin: 0 -0.5em;
+    color: #444444;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .infosheet .section h1 + p, .infosheet .section h1 + ul, .infosheet .section h1 + ol, .infosheet .section h2 + p, .infosheet .section h2 + ul, .infosheet .section h2 + ol {
+    margin-top: 0.5em;
+  }
+  .infosheet .section .social {
+    position: relative;
+    margin: 0.2em 0 -0.5em 0;
+  }
+  .infosheet .section .social iframe {
+    display: inline-block;
+  }
+  .infosheet .section .social iframe.twitter-share-button {
+    width: 88px !important;
+  }
+  .infosheet .section .social iframe.facebooklike {
+    position: relative;
+    top: 1px;
+    width: 125px !important;
+  }
+  .infosheet .section .social #___plusone_0 {
+    width: 70px !important;
+  }
+  .infosheet .section .social button {
+    margin-top: 20px;
+  }
+  .infosheet .section.bar {
+    position: relative;
+    color: white;
+    background-color: #df5e0e;
+    padding: 1px 6px;
+    font-size: 0.8em;
+    text-align: -moz-center;
+    text-align: -webkit-center;
+    text-align: center;
+  }
+  .infosheet .section.first {
+    border-top: none;
+    text-align: center;
+  }
+  .infosheet .section.first h1 {
+    margin-bottom: 10px;
+  }
+  .infosheet .embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16/9 ratio */
+    padding-top: 30px;
+    /* IE6 workaround*/
+    height: 0;
+    overflow: hidden;
+  }
+  .infosheet .embed-container iframe, .infosheet .embed-container object, .infosheet .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .infosheet {
     margin: 0em auto 2em auto;
     -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 1px 5px;
@@ -433,69 +458,71 @@ dl.bar dd:last-child {
     margin: 0;
   }
 }
-.leftear, .rightear {
-  margin: 0;
-  padding: 0;
-  width: 4em;
+@media screen and (max-width: 767px) {
+  .leftear, .rightear {
+    display: block;
+    clear: both;
+  }
 }
-.leftear i, .rightear i {
-  color: #ccc;
-  font-size: 250%;
-}
-.leftear a, .rightear a {
-  display: block;
-  position: relative;
-  text-decoration: none;
-}
-.leftear a i, .rightear a i {
-  color: #816894;
-}
-.leftear a:hover, .rightear a:hover {
-  text-decoration: none;
-}
-
-.leftear {
-  float: right;
-  text-align: right;
-}
-
-.rightear {
-  float: left;
-  text-align: left;
-}
-
-.no-touch .leftear a {
-  padding-right: 0.33em;
-  -webkit-transition: left 0.1s linear;
-  -moz-transition: left 0.1s linear;
-  -o-transition: left 0.1s linear;
-  transition: left 0.1s linear;
-}
-.no-touch .leftear a:hover {
-  left: -5px;
-  -webkit-transition: left 0.1s linear;
-  -moz-transition: left 0.1s linear;
-  -o-transition: left 0.1s linear;
-  transition: left 0.1s linear;
-}
-.no-touch .rightear a {
-  padding-left: 0.33em;
-  -webkit-transition: right 0.1s linear;
-  -moz-transition: right 0.1s linear;
-  -o-transition: right 0.1s linear;
-  transition: right 0.1s linear;
-}
-.no-touch .rightear a:hover {
-  right: -5px;
-  -webkit-transition: right 0.1s linear;
-  -moz-transition: right 0.1s linear;
-  -o-transition: right 0.1s linear;
-  transition: right 0.1s linear;
-}
-
 @media screen and (min-width: 768px) {
   .leftear, .rightear {
-    margin: 2em 0;
+    margin: 0;
+    padding: 2em 0;
+    width: 4em;
+  }
+  .leftear i, .rightear i {
+    color: #ccc;
+    font-size: 250%;
+  }
+  .leftear a, .rightear a {
+    display: block;
+    position: relative;
+    text-decoration: none;
+  }
+  .leftear a i, .rightear a i {
+    color: #816894;
+  }
+  .leftear a:hover, .rightear a:hover {
+    text-decoration: none;
+  }
+
+  .leftear {
+    float: right;
+    text-align: right;
+  }
+
+  .rightear {
+    float: left;
+    text-align: left;
+  }
+
+  .no-touch .leftear a {
+    padding-right: 0.33em;
+    -webkit-transition: left 0.1s linear;
+    -moz-transition: left 0.1s linear;
+    -o-transition: left 0.1s linear;
+    transition: left 0.1s linear;
+  }
+  .no-touch .leftear a:hover {
+    left: -5px;
+    -webkit-transition: left 0.1s linear;
+    -moz-transition: left 0.1s linear;
+    -o-transition: left 0.1s linear;
+    transition: left 0.1s linear;
+  }
+  .no-touch .rightear a {
+    padding-left: 0.33em;
+    -webkit-transition: right 0.1s linear;
+    -moz-transition: right 0.1s linear;
+    -o-transition: right 0.1s linear;
+    transition: right 0.1s linear;
+  }
+  .no-touch .rightear a:hover {
+    right: -5px;
+    -webkit-transition: right 0.1s linear;
+    -moz-transition: right 0.1s linear;
+    -o-transition: right 0.1s linear;
+    transition: right 0.1s linear;
   }
 }
 .comments {

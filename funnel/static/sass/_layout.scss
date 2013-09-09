@@ -106,123 +106,38 @@ table.listing {
     background: $color-listing-hover;
 }
 
-.infosheet {    
-    margin: -0.7em -15px 1em -15px;
-    padding-bottom: 1em;
-    border: 1px solid $color-sheet-border;
-    @include border-radius(4px);
-    clear: both;
-    
-    .votebox {
-        float: right;
-        text-align: center;
-        padding-left: 1em;
-        .choices {
-            font-size: 180%;
-            margin-top: 10px;
-            text-align: center;
-            span.score {
-                font-family: $font-monospace;
-                border: 1px solid $color-outline;
-                @include border-radius(3px);
-                padding: 0 3px;
-            }
-            span.indicator {
-                font-family: $font-monospace;
-            }
-            a.votechoice {
-                font-family: $font-monospace;
-                border: 1px solid transparent;
-                @include border-radius(3px);
-                padding: 0 3px;
-            }
-            a.votechoice:hover {
-                border: 1px solid $color-outline;
-                text-decoration: none;
-            }
-            a.votechoice:active, a.votechoice.selected {
-                background-color: $color-section-heading-background;
-                color: $color-section-heading;
-            }
+.leftear, .rightear{
+    // border: 1px solid #dddddd;
+    // margin: -1px;
+}
+
+//proposal page mobile layout
+#proposal-nav{
+    border-top: 1px solid #EAEAEA;
+    border-bottom: 1px solid #EAEAEA;
+    margin-top: -10px;
+    a{
+        i{
+            color: #757576;
+            display: block;
+            padding-top: 17px;
         }
-        .label {
-            margin-top: 0.5em;
+        h6{
+            color: #757576;
+            margin-bottom: 5px;
         }
-    }
-    .section {
-        // border-top: 1px solid $color-outline-thin;
-        padding: 0 1.2em;
-        word-wrap: break-word;
-        h1 {
-            margin: 0.5em 0 0 0;
-        }
-        h2 {
-            //margin: 0.66em 0 0 0;
-            font-size: 100%;
-            font-weight: bold;
-            background: $color-section-heading-background;
-            padding: 0.25em 0.5em;
-            margin: 0 -0.5em;
-            color: $color-section-heading;
-            @include border-radius(3px);
-        }
-        h1+p, h1+ul, h1+ol, h2+p, h2+ul, h2+ol {
-            margin-top: 0.5em;
-        }
-        .social {
-            position: relative;
-            margin: 0.2em 0 -0.5em 0;
-            iframe {
-                display: inline-block;
-                &.twitter-share-button{
-                    width: 88px !important;
-                }
-                &.facebooklike {
-                    position: relative;
-                    top: 1px;
-                    width: 125px !important;
-                }
-            }
-            #___plusone_0{
-                width: 70px !important;
-            }
-            button{
-                margin-top: 20px;
-            }
-        }
-    }
-    .section.bar {
-        position: relative;
-        color: $color-bar;
-        background-color: $color-bar-background;
-        padding: 1px 6px;
-        font-size: 0.8em;
-        text-align: -moz-center;
-        text-align: -webkit-center;      
-        text-align: center;
-    }
-    .section.first {
-        border-top: none;
-        text-align: center;
-        h1{
-            margin-bottom: 10px;
-        }
-    }
-    .embed-container {
-        position: relative;
-        padding-bottom: 56.25%; /* 16/9 ratio */
-        padding-top: 30px; /* IE6 workaround*/
-        height: 0;
-        overflow: hidden;
-        iframe, object, embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .prev-next{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-bottom: 5px;
         }
     }
 }
+#leftear{
+    border-right: 1px solid #EAEAEA;
+}
+
 
 // if links list in proposal contains video
 @media screen and (min-width: 992px){
@@ -258,6 +173,124 @@ table.listing {
 //
 
 @media screen and (min-width: 768px){
+    .infosheet {    
+        margin: -0.7em -15px 1em -15px;
+        padding-bottom: 1em;
+        border: 1px solid $color-sheet-border;
+        @include border-radius(4px);
+        clear: both;
+        
+        .votebox {
+            float: right;
+            text-align: center;
+            padding-left: 1em;
+            .choices {
+                font-size: 180%;
+                margin-top: 10px;
+                text-align: center;
+                span.score {
+                    font-family: $font-monospace;
+                    border: 1px solid $color-outline;
+                    @include border-radius(3px);
+                    padding: 0 3px;
+                }
+                span.indicator {
+                    font-family: $font-monospace;
+                }
+                a.votechoice {
+                    font-family: $font-monospace;
+                    border: 1px solid transparent;
+                    @include border-radius(3px);
+                    padding: 0 3px;
+                }
+                a.votechoice:hover {
+                    border: 1px solid $color-outline;
+                    text-decoration: none;
+                }
+                a.votechoice:active, a.votechoice.selected {
+                    background-color: $color-section-heading-background;
+                    color: $color-section-heading;
+                }
+            }
+            .label {
+                margin-top: 0.5em;
+            }
+        }
+        .section {
+            // border-top: 1px solid $color-outline-thin;
+            padding: 0 1.2em;
+            word-wrap: break-word;
+            h1 {
+                margin: 0.5em 0 0 0;
+            }
+            h2 {
+                //margin: 0.66em 0 0 0;
+                font-size: 100%;
+                font-weight: bold;
+                background: $color-section-heading-background;
+                padding: 0.25em 0.5em;
+                margin: 0 -0.5em;
+                color: $color-section-heading;
+                @include border-radius(3px);
+            }
+            h1+p, h1+ul, h1+ol, h2+p, h2+ul, h2+ol {
+                margin-top: 0.5em;
+            }
+            .social {
+                position: relative;
+                margin: 0.2em 0 -0.5em 0;
+                iframe {
+                    display: inline-block;
+                    &.twitter-share-button{
+                        width: 88px !important;
+                    }
+                    &.facebooklike {
+                        position: relative;
+                        top: 1px;
+                        width: 125px !important;
+                    }
+                }
+                #___plusone_0{
+                    width: 70px !important;
+                }
+                button{
+                    margin-top: 20px;
+                }
+            }
+        }
+        .section.bar {
+            position: relative;
+            color: $color-bar;
+            background-color: $color-bar-background;
+            padding: 1px 6px;
+            font-size: 0.8em;
+            text-align: -moz-center;
+            text-align: -webkit-center;      
+            text-align: center;
+        }
+        .section.first {
+            border-top: none;
+            text-align: center;
+            h1{
+                margin-bottom: 10px;
+            }
+        }
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16/9 ratio */
+            padding-top: 30px; /* IE6 workaround*/
+            height: 0;
+            overflow: hidden;
+            iframe, object, embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
     .infosheet {    
         margin: 0em auto 2em auto;
         @include box-shadow($color-shadow 0 1px 5px);//, rgba(0, 0, 0, 0.1) 0 0 20px inset);
@@ -403,65 +436,72 @@ dl.bar {
 }
 
 
-.leftear, .rightear {
-    //font-weight: bold;
-    margin: 0;
-    padding: 0;
-    width: 4em;
-    i {
-        color: #ccc;
-        font-size: 250%;
-    }
-    a {
+
+
+@media screen and (max-width: 767px){
+    .leftear, .rightear{
         display: block;
-        position: relative;
-        text-decoration: none;
-        i{
-            color: #816894;
-        }
+        clear: both;
     }
-    a:hover {
-        //@include text-shadow($color-shadow 0 0 2px);
-        //color: $color-link;
-        text-decoration: none;
-    }
-}
-.leftear {
-    float: right;
-    text-align: right;
-}
-.rightear {
-    float: left;
-    text-align: left;
-}
-.no-touch{
-   .leftear {
-        a {
-            padding-right: 0.33em;
-            @include single-transition(left, 0.1s, linear);
-        }
-        a:hover {
-            left: -5px;
-            @include single-transition(left, 0.1s, linear);
-        }
-    }
-    .rightear {
-        a {
-            padding-left: 0.33em;
-            @include single-transition(right, 0.1s, linear);
-        }
-        a:hover {
-            right: -5px;
-            @include single-transition(right, 0.1s, linear);
-        }
-    }
- 
+    
 }
 
 @media screen and (min-width: 768px){
+
     .leftear, .rightear {
-        margin: 2em 0;
+        //font-weight: bold;
+        margin: 0;
+        padding: 2em 0;
+        width: 4em;
+        i {
+            color: #ccc;
+            font-size: 250%;
+        }
+        a {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            i{
+                color: #816894;
+            }
+        }
+        a:hover {
+            //@include text-shadow($color-shadow 0 0 2px);
+            //color: $color-link;
+            text-decoration: none;
+        }
     }
+    .leftear {
+        float: right;
+        text-align: right;
+    }
+    .rightear {
+        float: left;
+        text-align: left;
+    }
+    .no-touch{
+       .leftear {
+            a {
+                padding-right: 0.33em;
+                @include single-transition(left, 0.1s, linear);
+            }
+            a:hover {
+                left: -5px;
+                @include single-transition(left, 0.1s, linear);
+            }
+        }
+        .rightear {
+            a {
+                padding-left: 0.33em;
+                @include single-transition(right, 0.1s, linear);
+            }
+            a:hover {
+                right: -5px;
+                @include single-transition(right, 0.1s, linear);
+            }
+        }
+     
+}
 }
 
 .comments {
