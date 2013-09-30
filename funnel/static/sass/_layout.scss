@@ -236,6 +236,17 @@ table.listing {
             .label {
                 margin-top: 0.5em;
             }
+// =======
+//         h2 {
+//             //margin: 0.66em 0 0 0;
+//             font-size: 100%;
+//             font-weight: bold;
+//             background: $color-section-heading-background;
+//             padding: 0 0.5em;
+//             margin: 0 -0.5em;
+//             color: $color-section-heading;
+//             @include border-radius(3px);
+// >>>>>>> 0518fd7c1f8cce2ab0863d2af0ffc56245577720
         }
         #social-share{
             i{
@@ -742,7 +753,7 @@ dl.bar {
 }
 form#newcomment{
     #field-comment_message{
-        margin-bottom: -15px;
+        // margin-bottom: -15px;
         .control-label{
             width: auto !important;
             padding-bottom: 5px;

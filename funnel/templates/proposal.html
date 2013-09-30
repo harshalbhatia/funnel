@@ -82,7 +82,6 @@
             {%- endif %}
           </p>
         </div>
-
         <div class="row">
           <!-- Social buttons -->
           <div class="col-md-12" id="social-share">
@@ -99,6 +98,18 @@
             </div>
 
           </div>
+        <p>
+          {{ renderfield(commentform.message) }}
+        </p>
+        <p>
+          <input id="comment-submit" class="btn btn-primary" type="submit" value="Post comment"/>
+        </p>
+      </form>
+      <form method="POST" id="delcomment" class="hidden">
+        <div class="hidden">
+          <input type="hidden" name="form.id" value="delcomment"/>
+          {{ delcommentform.hidden_tag() }}
+          {{ delcommentform.comment_id() }}
         </div>
       </div>
       <div class="section bar row">
@@ -138,21 +149,21 @@
         {%- endif -%}
 
         <h2>Objective</h2>
-        {{ proposal.objective_html|safe }}
+        {{ proposal.objective }}
         <h2>Description</h2>
-        {{ proposal.description_html|safe }}
-        {% if proposal.requirements -%}
+        {{ proposal.description }}
+        {% if proposal.requirements.text -%}
           <h2>Requirements</h2>
-          {{ proposal.requirements_html|safe }}
+          {{ proposal.requirements }}
         {%- endif %}
-        {% if proposal.bio -%}
+        {% if proposal.bio.text -%}
           <h2>Speaker bio</h2>
-          {{ proposal.bio_html|safe }}
+          {{ proposal.bio }}
         {%- endif %}
-    {% if proposal.slides or proposal.links %}
-      </div>
-      <div class="section">
-    {% endif %}
+        {% if proposal.slides or proposal.links %}
+          </div>
+          <div class="section">
+        {% endif %}
         {% if proposal.slides %}
           <h2 id="slides">Slides</h2>
           <p>

@@ -215,6 +215,26 @@ table.listing {
 .infosheet .section.first .votebox .choices a.votechoice.minus:active, .infosheet .section.first .votebox .choices a.votechoice.minus.selected {
   background-color: #F26E52;
   border-color: #F26E52;
+/*=======
+.infosheet .section {
+  padding: 0 1.2em;
+}
+.infosheet .section h1 {
+  margin: 0.5em 0 0 0;
+}
+.infosheet .section h2 {
+  font-size: 100%;
+  font-weight: bold;
+  background: #d9e8f0;
+  padding: 0 0.5em;
+  margin: 0 -0.5em;
+  color: #444444;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+>>>>>>> 0518fd7c1f8cce2ab0863d2af0ffc56245577720*/
 }
 .infosheet .section.first .votebox .label {
   margin-top: 0.5em;
@@ -749,9 +769,6 @@ dl.bar dd:last-child {
   text-decoration: none;
 }
 
-form#newcomment #field-comment_message {
-  margin-bottom: -15px;
-}
 form#newcomment #field-comment_message .control-label {
   width: auto !important;
   padding-bottom: 5px;

@@ -3,15 +3,16 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.lastuser.sqlalchemy import UserBase
 from coaster import make_name
+from coaster.sqlalchemy import MarkdownColumn
 from .. import app
 
 __all__ = ['db', 'SPACESTATUS', 'User', 'Tag', 'ProposalSpace', 'ProposalSpaceSection', 'Proposal',
-           'VoteSpace', 'Vote', 'CommentSpace', 'Comment', 'UserGroup']
+           'VoteSpace', 'Vote', 'CommentSpace', 'Comment', 'UserGroup', 'FEEDBACK_AUTH_TYPE', 'ProposalFeedback']
 
 db = SQLAlchemy(app)
 
-# --- Constants ---------------------------------------------------------------
 
+# --- Constants ---------------------------------------------------------------
 
 class SPACESTATUS:
     DRAFT = 0
@@ -37,6 +38,11 @@ class SPACETYPE:
     PROPOSALSPACESECTION = 1
     PROPOSAL = 2
     COMMENT = 3
+
+
+class FEEDBACK_AUTH_TYPE:
+    NOAUTH = 0
+    HGAUTH = 1
 
 
 # --- Mixins ------------------------------------------------------------------
@@ -142,8 +148,7 @@ class Comment(BaseMixin, db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
     children = db.relationship("Comment", backref=db.backref("parent", remote_side="Comment.id"))
 
-    message = db.Column(db.Text, nullable=False)
-    message_html = db.Column(db.Text, nullable=False)
+    message = MarkdownColumn('message', nullable=False)
 
     status = db.Column(db.Integer, default=0, nullable=False)
 
@@ -164,7 +169,6 @@ class Comment(BaseMixin, db.Model):
             self.status = COMMENTSTATUS.DELETED
             self.user = None
             self.message = ''
-            self.message_html = ''
         else:
             if self.parent and self.parent.is_deleted:
                 # If the parent is deleted, ask it to reconsider removing itself
@@ -192,8 +196,7 @@ class ProposalSpace(BaseMixin, db.Model):
     name = db.Column(db.Unicode(80), unique=True, nullable=False)
     title = db.Column(db.Unicode(80), nullable=False)
     tagline = db.Column(db.Unicode(250), nullable=False)
-    description = db.Column(db.Text, default=u'', nullable=False)
-    description_html = db.Column(db.Text, default=u'', nullable=False)
+    description = MarkdownColumn('description', default=u'', nullable=False)
     datelocation = db.Column(db.Unicode(50), default=u'', nullable=False)
     date = db.Column(db.Date, nullable=False)
     website = db.Column(db.Unicode(250), nullable=True)
@@ -255,9 +258,7 @@ class Proposal(BaseMixin, db.Model):
 
     email = db.Column(db.Unicode(80), nullable=True)
     phone = db.Column(db.Unicode(80), nullable=True)
-    bio = db.Column(db.Text, nullable=True)
-    bio_html = db.Column(db.Text, nullable=True)
-
+    bio = MarkdownColumn('bio', nullable=True)
     proposal_space_id = db.Column(db.Integer, db.ForeignKey('proposal_space.id'), nullable=False)
     proposal_space = db.relationship(ProposalSpace, primaryjoin=proposal_space_id == ProposalSpace.id,
         backref=db.backref('proposals', cascade="all, delete-orphan"))
@@ -266,14 +267,11 @@ class Proposal(BaseMixin, db.Model):
     section_id = db.Column(db.Integer, db.ForeignKey('proposal_space_section.id'), nullable=True)
     section = db.relationship(ProposalSpaceSection, primaryjoin=section_id == ProposalSpaceSection.id,
         backref="proposals")
-    objective = db.Column(db.Text, nullable=False)
-    objective_html = db.Column(db.Text, nullable=False)
+    objective = MarkdownColumn('objective', nullable=False)
     session_type = db.Column(db.Unicode(40), nullable=False, default=u'')
     technical_level = db.Column(db.Unicode(40), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    description_html = db.Column(db.Text, nullable=False)
-    requirements = db.Column(db.Text, nullable=False)
-    requirements_html = db.Column(db.Text, nullable=False)
+    description = MarkdownColumn('description', nullable=False)
+    requirements = MarkdownColumn('requirements', nullable=False)
     slides = db.Column(db.Unicode(250), default=u'', nullable=False)
     links = db.Column(db.Text, default=u'', nullable=False)
     tags = db.relationship(Tag, secondary=proposal_tags)
@@ -326,3 +324,26 @@ class UserGroup(BaseMixin, db.Model):
     proposal_space = db.relationship(ProposalSpace, primaryjoin=proposal_space_id == ProposalSpace.id,
         backref=db.backref('usergroups', cascade="all, delete-orphan"))
     users = db.relationship(User, secondary=group_members)
+
+
+class ProposalFeedback(BaseMixin, db.Model):
+    __tablename__ = 'proposal_feedback'
+    #: Proposal that we're submitting feedback on
+    proposal_id = db.Column(None, db.ForeignKey('proposal.id'), nullable=False)
+    proposal = db.relationship(Proposal)
+    #: Authentication type (authenticated or not)
+    auth_type = db.Column(db.Integer, nullable=False)
+    #: Type of identifier for the user
+    id_type = db.Column(db.Unicode(80), nullable=False)
+    #: User id (of the given type)
+    userid = db.Column(db.Unicode(80), nullable=False)
+    #: Minimum scale for feedback (x in x-y)
+    min_scale = db.Column(db.Integer, nullable=False)
+    #: Maximum scale for feedback (y in x-y)
+    max_scale = db.Column(db.Integer, nullable=False)
+    #: Feedback on the content of the proposal
+    content = db.Column(db.Integer, nullable=True)
+    #: Feedback on the presentation of the proposal
+    presentation = db.Column(db.Integer, nullable=True)
+
+    __table_args__ = (db.UniqueConstraint('proposal_id', 'auth_type', 'id_type', 'userid'),)
