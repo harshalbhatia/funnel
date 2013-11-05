@@ -113,9 +113,10 @@ table.listing {
 
 //proposal page mobile layout
 #proposal-nav{
-    border-top: 1px solid $color-proposal-border;
+    border-top: 2px solid $color-proposal-border;
     border-bottom: 1px solid $color-proposal-border;
     margin-top: -10px;
+    background: #F3F3F3;
     .col-xs-6:first-child{
         border-right: 1px solid $color-proposal-border;
     }
@@ -276,7 +277,10 @@ table.listing {
             }        
         }
     }
-    .section.bar {
+    .mobile-toolset{
+
+    }
+    .bar {
         position: relative;
         color: $color-bar-background;
         border-top: 1px solid #E6E6E6;
@@ -289,6 +293,7 @@ table.listing {
         margin-left: -15px;
         margin-right: -15px;
         display: block;
+        overflow: hidden;
     }
     .section {
         // border-top: 1px solid $color-outline-thin;

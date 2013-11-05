@@ -49,25 +49,6 @@
   <div class="col-md-10 col-sm-10 col-xs-12 col-sm-pull-1 col-md-pull-1">
     <div class="infosheet">
       <div class="section first">
-        {%- set vote = proposal.votes.getvote(g.user) %}
-        <div class="row votebox">                  
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">          
-            <div class="choices">
-              {%- if not vote %}
-                <a class="votechoice plus" title="Vote up" href="{{ url_for('voteupsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice minus" title="Vote down" href="{{ url_for('votedownsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
-              {%- elif vote.votedown %}
-                <a class="votechoice plus" title="Vote up" href="{{ url_for('voteupsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice selected minus" title="Withdraw vote" href="{{ url_for('votecancelsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
-              {%- else %}
-                <a class="votechoice selected plus" title="Withdraw vote" href="{{ url_for('votecancelsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice minus" title="Vote down" href="{{ url_for('votedownsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
-              {% endif %}
-              <!-- <span class="indicator">&rarr;</span> -->
-              
-            </div>
-            <div class="label">
-              Vote on this proposal
-            </div>
-          </div> 
-        </div>
         <div class="row">
           <h1 class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{ proposal.title }}</h1>
           <p class="col-md-12">
@@ -82,64 +63,80 @@
             {%- endif %}
           </p>
         </div>
+      </div>
+      <div class="section bar">
         <div class="row">
-          <!-- Social buttons -->
-          <div class="col-md-12" id="social-share">
-            <i class="icon-share icon-2x"></i>
-            <div class="social">
-              <div class="row">
-                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
-                  <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="{{ config['TWITTER_ID'] }}">Tweet</a>
-                  <g:plusone size="medium"></g:plusone>
-                  <iframe class="facebooklike" src="//www.facebook.com/plugins/like.php?app_id=114496105304651&amp;href={{ request.url }}&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=recommend&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
-                </div>
-                
-              </div>
-            </div>
-
+          <div class="col-xs-6">
+            {%- if proposal.section %}
+              <span><strong>Section:</strong></span>
+              <span>{{ proposal.section.title }}</span>
+              <br class="hide-desktop">
+            {%- endif %}
+            {%- if proposal.session_type %}
+              <span><strong>Session type</strong></span>
+              <span>{{ proposal.session_type }}</span>                
+              <br class="hide-desktop">
+            {%- endif %}
           </div>
-        <p>
-          {{ renderfield(commentform.message) }}
-        </p>
-        <p>
-          <input id="comment-submit" class="btn btn-primary" type="submit" value="Post comment"/>
-        </p>
-      </form>
-      <form method="POST" id="delcomment" class="hidden">
-        <div class="hidden">
-          <input type="hidden" name="form.id" value="delcomment"/>
-          {{ delcommentform.hidden_tag() }}
-          {{ delcommentform.comment_id() }}
+          <div class="col-xs-6">
+            <span><strong>Technical level</strong></span>
+            <span>{{ proposal.technical_level }}</span>              
+          </div>
         </div>
       </div>
-      <div class="section bar row">
-        <dl class="bar {% if 'siteadmin' in g.lastuserinfo.permissions %} text-left col-xs-6 {% endif %}">
-          {%- if proposal.section %}
-            <dt>Section</dt>
-            <dd>{{ proposal.section.title }}</dd>
-            <br class="hide-desktop">
-          {%- endif %}
-          {%- if proposal.session_type %}
-            <dt>Session type</dt>
-            <dd>{{ proposal.session_type }}</dd>
-            <br class="hide-desktop">
-          {%- endif %}
-          <dt>Technical level</dt>
-          <dd>{{ proposal.technical_level }}</dd>
-        </dl>
-        {% if 'siteadmin' in g.lastuserinfo.permissions %}
-          <div class="col-xs-6" id="session-admin-btn">
-            <form method="POST" action="{{ url_for('confirmsession', name=space.name, slug=proposal.urlname) }}">
-              {{ confirmform.hidden_tag() }}
-              {% if proposal.confirmed -%}
-                <button class="btn btn-warning" type="submit">Cancel Session</button>
-              {% else %}
-                <button class="btn btn-warning" type="submit">Confirm Session</button>
-              {% endif -%}
-            </form>
+      <div class="section mobile-toolset">
+        <div class="row">
+          <div class="col-xs-4 votebox text-left">
+            {%- set vote = proposal.votes.getvote(g.user) %}
+            <div class="choices">
+              {%- if not vote %}
+                <a class="votechoice plus" title="Vote up" href="{{ url_for('voteupsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice minus" title="Vote down" href="{{ url_for('votedownsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
+              {%- elif vote.votedown %}
+                <a class="votechoice plus" title="Vote up" href="{{ url_for('voteupsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice selected minus" title="Withdraw vote" href="{{ url_for('votecancelsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
+              {%- else %}
+                <a class="votechoice selected plus" title="Withdraw vote" href="{{ url_for('votecancelsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-up"></i></a><span class="score">{%- if proposal.votes.count > 0 -%}+{%- endif -%}{{ proposal.votes.count }}</span><a class="votechoice minus" title="Vote down" href="{{ url_for('votedownsession', name=space.name, slug=proposal.urlname) }}"><i class="icon-chevron-down"></i></a>
+              {% endif %}
+            </div>
           </div>
-        {% endif %}
+          <div class="col-xs-4 text-center">
+            {% if 'siteadmin' in g.lastuserinfo.permissions %}
+              <div id="session-admin-btn">
+                <form method="POST" action="{{ url_for('confirmsession', name=space.name, slug=proposal.urlname) }}">
+                  {{ confirmform.hidden_tag() }}
+                  {% if proposal.confirmed -%}
+                    <button class="btn btn-warning" type="submit">Cancel Session</button>
+                  {% else %}
+                    <button class="btn btn-warning" type="submit">Confirm Session</button>
+                  {% endif -%}
+                </form>
+              </div>
+            {% endif %}
+          </div>
+          <div class="col-xs-4 text-right">
+            <div id="social-share">
+              <i class="icon-twitter"></i>
+              <i class="icon-google-plus"></i>
+              <i class="icon-facebook"></i>
+              <!-- <div class="social">
+                <div class="row">
+                  <div class="col-sm-8 col-md-9 col-lg-10">
+                    <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="{{ config['TWITTER_ID'] }}">Tweet</a>
+                    <g:plusone size="medium"></g:plusone>
+                    <iframe class="facebooklike" src="//www.facebook.com/plugins/like.php?app_id=114496105304651&amp;href={{ request.url }}&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=recommend&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
+                  </div>              
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
       </div>
+      <!--
+
+        
+        <div class="row">
+          Social buttons
+                  </div>     
+      </div>-->
       <div class="section">
         {%- if not proposal.speaker -%}
           <p>
@@ -207,7 +204,7 @@
               {{ renderfield(commentform.message) }}
             </p>
             <p>
-              <input id="comment-submit" class="btn btn-default" type="submit" value="Post comment"/>
+              <input id="comment-submit" class="btn btn-primary" type="submit" value="Post comment"/>
             </p>
           </form>
           <form method="POST" id="delcomment" class="hidden">
@@ -223,7 +220,7 @@
             </p>
           </form>
         {% endif %}
-      </div>
+     <!-- </div> -->
     </div>
   </div>
 </div>
