@@ -28,6 +28,10 @@
   text-indent: -1000px;
 }
 
+.nav {
+  margin-bottom: 10px;
+}
+
 .breadcrumbs {
   *zoom: 1;
   list-style: none;
@@ -83,9 +87,6 @@ table.listing {
 
 .listing tr:nth-of-type(even) {
   background: #f6f6f6;
-}
-.listing tr:nth-of-type(even) a {
-  font-size: 12px;
 }
 
 .listing thead th {
@@ -718,9 +719,8 @@ dl.bar dd:last-child {
 .comments .com-children {
   border-left: 1px dotted #b7b7b7;
   list-style: none;
-  margin-left: 0;
   padding-left: 2em;
-  margin-bottom: 0;
+  margin: 0.5em 0 -0.5em 0;
 }
 .comments .com-header, .comments .com-footer {
   font-size: 80%;

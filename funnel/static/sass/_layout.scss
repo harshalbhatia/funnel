@@ -20,6 +20,9 @@
   text-indent: -1000px;
 }
 
+.nav {
+    margin-bottom: 10px;
+}
 
 .breadcrumbs {
     @include pie-clearfix;
@@ -75,9 +78,9 @@ table.listing {
 
 .listing tr:nth-of-type(even) {
     background: $color-listing-even;
-    a{
-        font-size: 12px;
-    }
+    // a{
+    //     font-size: 12px;
+    // }
 }
 
 .listing thead th {
@@ -728,9 +731,8 @@ dl.bar {
     .com-children {
         border-left: 1px dotted $color-outline;
         list-style: none;
-        margin-left: 0;
         padding-left: 2em;
-        margin-bottom: 0;
+        margin: 0.5em 0 -0.5em 0;
     }
     .com-header, .com-footer {
         font-size: 80%;
